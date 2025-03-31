@@ -16,8 +16,8 @@ public class User {
     private String email;
     private String password; //implement hashing
 
-//    @OneToMany
-//    private <List>Product products;
+    @OneToMany
+    private List<Product> products;
 
     public User() {}
 
