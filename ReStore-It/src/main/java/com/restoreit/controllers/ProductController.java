@@ -30,6 +30,7 @@ public class ProductController {
     public boolean CreateProduct(@RequestBody Product product){
         return productService.CreateProduct(product);
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void>DeleteProduct(@PathVariable Integer id){
         productService.DeleteProduct(id);
