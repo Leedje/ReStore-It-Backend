@@ -5,6 +5,7 @@ plugins {
     id 'com.netflix.dgs.codegen' version '7.0.3'
     id 'org.hibernate.orm' version '6.6.8.Final'
     id 'org.graalvm.buildtools.native' version '0.10.5'
+    id "org.sonarqube" version "6.0.1.5171"
 }
 
 group = 'com.example'
@@ -38,6 +39,13 @@ generateJava {
 hibernate {
     enhancement {
         enableAssociationManagement = true
+    }
+}
+
+sonar {
+    properties {
+        property "sonar.projectKey", "restore-it_online-thrift-store"
+        property "sonar.organization", "restore-it"
     }
 }
 
