@@ -2,26 +2,23 @@ stages:
   - build
   - test
   - sonarcloud-check
-  - deploy
 
-build-job:
+build_project:
   stage: build
   script:
-    - echo "Hello, Leedje!"
+    - echo "Build starting.."
 
-test-job1:
+test_job1:
   stage: test
   script:
     - echo "This job tests something"
 
-test-job2:
+test_job2:
   stage: test
   script:
     - echo "This job tests something, but takes more time than test-job1."
-    - echo "Simulating a test that takes 20 seconds longer."
-    - sleep 20
 
-sonarcloud-check:
+sonarcloud_check:
   stage: sonarcloud-check
   variables:
     SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"
@@ -36,12 +33,7 @@ sonarcloud-check:
   script:
     - sonar-scanner
   only:
-    - merge_requests
+    - commit
     - master
     - develop
-
-deploy-prod:
-  stage: deploy
-  script:
-    - echo "This job deploys something from the $CI_COMMIT_BRANCH branch."
-  environment: production
+    - main
