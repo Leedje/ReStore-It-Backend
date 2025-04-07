@@ -1,3 +1,9 @@
+stages:
+  - build
+  - test
+  - sonarcloud-check
+  - deploy
+
 build-job:
   stage: build
   script:
@@ -12,9 +18,27 @@ test-job2:
   stage: test
   script:
     - echo "This job tests something, but takes more time than test-job1."
-    - echo "After the echo commands complete, it runs the sleep command for 20 seconds"
-    - echo "which simulates a test that runs 20 seconds longer than test-job1"
+    - echo "Simulating a test that takes 20 seconds longer."
     - sleep 20
+
+sonarcloud-check:
+  stage: sonarcloud-check
+  variables:
+    SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"
+    GIT_DEPTH: "0"
+  image:
+    name: sonarsource/sonar-scanner-cli:latest
+    entrypoint: [""]
+  cache:
+    key: "${CI_JOB_NAME}"
+    paths:
+      - .sonar/cache
+  script:
+    - sonar-scanner
+  only:
+    - merge_requests
+    - master
+    - develop
 
 deploy-prod:
   stage: deploy
