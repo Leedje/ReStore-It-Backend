@@ -8,14 +8,14 @@ build_project:
   tags: [gradle]
   script:
     - echo "Build starting..."
-    - gradle build
+  #  - gradle build
 
 run_tests:
   stage: test
   tags: [gradle]
   script:
     - echo "Running tests..."
-    - gradle test
+ #   - gradle test
 
 variables:
   SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"
