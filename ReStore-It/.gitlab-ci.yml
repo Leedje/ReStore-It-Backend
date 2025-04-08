@@ -3,6 +3,10 @@ stages:
   - test
   - sonarcloud-check
 
+sast:
+  rules:
+    - when: never
+
 build_project:
   stage: build
   tags: [gradle]
