@@ -3,9 +3,6 @@ stages:
   - test
   - sonarcloud-check
 
-include:
-  - local: .gitlab-ci.yml
-
 build_project:
   stage: build
   tags: [gradle]
