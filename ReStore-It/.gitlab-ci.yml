@@ -3,9 +3,8 @@ stages:
   - test
   - sonarcloud-check
 
-sast:
-  rules:
-    - when: never
+include:
+  - local: .gitlab-ci.yml
 
 build_project:
   stage: build
