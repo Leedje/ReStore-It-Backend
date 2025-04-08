@@ -19,6 +19,7 @@ java {
 
 repositories {
     mavenCentral()
+    gradlePluginPortal()
 }
 
 dependencies {
@@ -30,6 +31,13 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
+sonar {
+    properties {
+        property "sonar.projectKey", "restore-it_online-thrift-store"
+        property "sonar.organization", "restore-it"
+    }
+}
+
 generateJava {
     schemaPaths = ["${projectDir}/src/main/resources/graphql-client"]
     packageName = 'com.example.restoreit.codegen'
@@ -39,13 +47,6 @@ generateJava {
 hibernate {
     enhancement {
         enableAssociationManagement = true
-    }
-}
-
-sonar {
-    properties {
-        property "sonar.projectKey", "restore-it_online-thrift-store"
-        property "sonar.organization", "restore-it"
     }
 }
 
