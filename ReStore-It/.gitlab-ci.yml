@@ -23,12 +23,10 @@ variables:
 sonarcloud-check:
   stage: sonarcloud-check
   tags: [gradle]
-  image:
-    name: sonarsource/sonar-scanner-cli:latest
-    entrypoint: [""]
+  image: gradle:jdk17
   cache:
     key: "${CI_JOB_NAME}"
     paths:
       - .sonar/cache
   script:
-    - sonar-scanner
+    - gradle sonarqube
