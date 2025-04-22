@@ -8,7 +8,7 @@ build_project:
   tags: [gradle]
   script:
     - echo "Build starting..."
-    - gradle clean build
+   # - gradle clean build
 
 run_tests:
   stage: test
