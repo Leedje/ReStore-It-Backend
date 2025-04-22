@@ -1,19 +1,25 @@
 package com.restoreit.services;
 
-import com.restoreit.repository.UserRepository;
-import org.springframework.stereotype.Service;
+import com.restoreit.dtos.UserDTO;
 import com.restoreit.models.User;
+import com.restoreit.mappers.UserMapper;
+import com.restoreit.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
 
-    public UserService(UserRepository userRepository) {
+    @Autowired
+    public UserService(UserRepository userRepository, UserMapper userMapper) {
         this.userRepository = userRepository;
+        this.userMapper = userMapper;
     }
 
-    public User CreateUser(User user){
-        return userRepository.save(user);
+    public boolean CreateUser(UserDTO userDto){
+        return userRepository.save(userMapper.DTOToUser(userDto)) != null;
     }
 }

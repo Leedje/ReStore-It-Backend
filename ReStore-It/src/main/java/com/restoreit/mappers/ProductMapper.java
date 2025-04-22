@@ -5,7 +5,7 @@ import com.restoreit.dtos.ProductDTO;
 import com.restoreit.models.Product;
 import org.mapstruct.factory.Mappers;
 
-@Mapper (uses = CategoryMapper.class)
+@Mapper (uses = CategoryMapper.class, componentModel = "spring")
 public interface ProductMapper {
 
     ProductMapper INSTANCE = Mappers.getMapper(ProductMapper.class);

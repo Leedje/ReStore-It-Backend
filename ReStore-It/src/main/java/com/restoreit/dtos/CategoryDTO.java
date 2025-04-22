@@ -3,6 +3,6 @@ package com.restoreit.dtos;
 import java.util.UUID;
 
 public class CategoryDTO {
-    private UUID id;
-    private String name;
+    public UUID id;
+    public String name;
 }

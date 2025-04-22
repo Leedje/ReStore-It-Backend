@@ -1,7 +1,7 @@
 package com.restoreit.controllers;
 
 import com.restoreit.services.UserService;
-import com.restoreit.models.User;
+import com.restoreit.dtos.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,7 +16,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/create")
-    public User CreateUser(@RequestBody User user){
+    public boolean CreateUser(@RequestBody UserDTO user){
         return userService.CreateUser(user);
     }
 

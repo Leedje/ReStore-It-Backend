@@ -10,6 +10,4 @@ public class ProductDTO {
     public int price;
     public int numberOfProducts;
     public String seller;
-
-    public ProductDTO() {}
 }
