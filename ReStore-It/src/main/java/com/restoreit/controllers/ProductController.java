@@ -1,6 +1,6 @@
 package com.restoreit.controllers;
 
-import com.restoreit.models.Product;
+import com.restoreit.dtos.ProductDTO;
 import com.restoreit.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,22 +16,21 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("")
-    public List<Product> GetAllProducts(){
+    public List<ProductDTO> GetAllProducts(){
         return productService.GetAllProducts();
     }
 
     @GetMapping("/{id}")
-    public Product GetProductByID(@PathVariable Integer id){
+    public ProductDTO GetProductByID(@PathVariable Integer id){
         return productService.GetProductByID(id);
     }
 
-    //Path variable annotation for an object/model?
     @PostMapping("/create")
-    public boolean CreateProduct(@RequestBody Product product){
+    public boolean CreateProduct(@RequestBody ProductDTO product){
         return productService.CreateProduct(product);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}") //See if it's possible to delete without using the URL.
     public ResponseEntity<Void>DeleteProduct(@PathVariable Integer id){
         productService.DeleteProduct(id);
         return ResponseEntity.ok().build();

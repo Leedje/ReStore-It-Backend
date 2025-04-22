@@ -34,12 +34,12 @@ public class Order {
         this.id = id;
     }
 
-    public UUID getUserId() {
-        return userId;
+    public UUID getCustomerId() {
+        return customerId;
     }
 
-    public void setUserId(UUID userId) {
-        this.userId = userId;
+    public void setCustomerId(UUID customerId) {
+        this.customerId = customerId;
     }
 
     public List<Product> getProducts() {

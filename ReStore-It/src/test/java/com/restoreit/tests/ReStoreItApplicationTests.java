@@ -1,10 +1,10 @@
-package com.example.restoreit;
+package com.restoreit.tests;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ReStoreItApplicationTests {
+class RestoreItApplicationTests {
 
     @Test
     void contextLoads() {
