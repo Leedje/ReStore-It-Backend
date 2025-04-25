@@ -6,10 +6,10 @@ stages:
 
 variables:
   JAVA_HOME: "C:/Program Files/Java/jdk-21"
-  PATH: "$JAVA_HOME/bin:$PATH"
+  PATH: "$JAVA_HOME/bin:/tmp/gradle/gradle-7.4.2/bin:$PATH"
   SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"
   GIT_DEPTH: "0"
-  GIT_STRATEGY: none  # Add this line to disable Git operations
+  GIT_STRATEGY: none
 
 check_gitVersion:
   stage: install-commands
@@ -37,19 +37,23 @@ sonar_install:
 build_project:
   stage: build
   tags: [gradle]
+  before_script:
+    - $env:PATH += ";/tmp/gradle/gradle-7.4.2/bin"
   script:
-    - echo "Build starting..."
     - gradle clean build
 
 run_tests:
   stage: test
   tags: [gradle]
+  before_script:
+    - $env:PATH += ";/tmp/gradle/gradle-7.4.2/bin"
   script:
-    - echo "Running tests..."
     - gradle test
 
 sonarcloud-check:
   stage: sonarcloud-check
   tags: [gradle]
+  before_script:
+    - $env:PATH += ";/tmp/gradle/gradle-7.4.2/bin"
   script:
     - gradle sonarqube
