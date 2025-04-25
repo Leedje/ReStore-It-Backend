@@ -5,8 +5,6 @@ stages:
   - sonarcloud-check
 
 before_script:
-stage: install-commands
-script:
   - export PATH="$PATH:/c/Program Files/Git/cmd"
   - git --version
 
