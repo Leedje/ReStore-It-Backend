@@ -8,6 +8,7 @@ check_gitVersion:
   stage: install-commands
   tags: [gradle]
   script:
+    - $env:Path += ";C:\Program Files\Git\cmd"
     - git --version
 
 gradle_install:
