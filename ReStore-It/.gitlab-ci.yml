@@ -5,42 +5,23 @@ stages:
   - sonarcloud-check
 
 variables:
-  JAVA_HOME: "/tmp/java/jdk-21"  # Temporary Java installation directory
+  JAVA_HOME: "/tmp/java/jdk-21"  # Use temporary directories for pipeline jobs
   PATH: "$JAVA_HOME/bin:/tmp/gradle/gradle-7.4.2/bin:/tmp/sonar-scanner/sonar-scanner-4.7.0.2747-windows/bin:$PATH"
   SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"
   GIT_DEPTH: "0"
   GIT_STRATEGY: none
 
-java_install:
+check_gitVersion:
   stage: install-commands
+  tags: [gradle]
   script:
-    - mkdir -p /tmp/java
-    - wget https://download.java.net/openjdk/jdk21/ri/openjdk-21+35_linux-x64_bin.tar.gz -O java.tar.gz
-    - tar -xzf java.tar.gz -C /tmp/java
-    - export JAVA_HOME="/tmp/java/jdk-21"
-    - echo "JAVA_HOME is set to $JAVA_HOME"
-
-gradle_install:
-  stage: install-commands
-  script:
-    - wget https://services.gradle.org/distributions/gradle-7.4.2-bin.zip -O gradle.zip
-    - unzip gradle.zip -d /tmp/gradle
-    - export PATH="$PATH:/tmp/gradle/gradle-7.4.2/bin"
-
-sonar_install:
-  stage: install-commands
-  script:
-    - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-windows.zip -O sonar-scanner.zip
-    - unzip sonar-scanner.zip -d /tmp/sonar-scanner
-    - export PATH="$PATH:/tmp/sonar-scanner/sonar-scanner-4.7.0.2747-windows/bin"
+    - git --version
 
 build_project:
   stage: build
   tags: [gradle]
   before_script:
-    - cd $CI_PROJECT_DIR  # Navigate to the root project directory
-    - echo "Current directory: $(pwd)"
-    - ls -l  # Debug: List directory contents
+    - cd $CI_PROJECT_DIR  # Ensure we are in the project directory
   script:
     - gradle clean build
 
