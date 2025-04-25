@@ -23,6 +23,7 @@ run_tests:
    # - gradle test
 
 sonarcloud-check:
+  stage: sonarcloud-check
   image: gradle:jdk17
   cache:
     key: "${CI_JOB_NAME}"
