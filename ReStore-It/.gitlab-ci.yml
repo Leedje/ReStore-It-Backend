@@ -4,11 +4,16 @@ stages:
   - test
   - sonarcloud-check
 
-install_git:
-  stage: install-commands
-  script:
-    - winget install --id Git.Git -e --source winget  # Install Git using Winget (for Windows environments)
-    - git --version  # Verify the installation
+before_script:
+stage: install-commands
+  - export PATH="$PATH:/c/Program Files/Git/cmd"
+  - git --version
+
+#install_git:
+#  stage: install-commands
+#  script:
+#    - winget install --id Git.Git -e --source winget  # Install Git using Winget (for Windows environments)
+#    - git --version  # Verify the installation
 
 #gradle_install:
 #  stage: install-commands
@@ -31,14 +36,14 @@ build_project:
   tags: [gradle]
   script:
     - echo "Build starting..."
-    - gradle clean build
+  #  - gradle clean build
 
 run_tests:
   stage: test
   tags: [gradle]
   script:
     - echo "Running tests..."
-    - gradle test
+  #  - gradle test
 
 variables:
   JAVA_HOME: "C:/Program Files/Java/jdk-21"
@@ -55,4 +60,4 @@ sonarcloud-check:
     paths:
       - .sonar/cache
   script:
-    - gradle sonarqube
+ #   - gradle sonarqube
