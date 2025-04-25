@@ -11,12 +11,6 @@ variables:
   GIT_DEPTH: "0"
   GIT_STRATEGY: none
 
-check_gitVersion:
-  stage: install-commands
-  tags: [gradle]
-  script:
-    - git --version
-
 build_project:
   stage: build
   tags: [gradle]
