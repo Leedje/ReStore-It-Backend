@@ -5,8 +5,8 @@ stages:
   - sonarcloud-check
 
 variables:
-  JAVA_HOME: "C:/Program Files/Java/jdk-21"
-  PATH: "$JAVA_HOME/bin:/tmp/gradle/gradle-7.4.2/bin:$PATH"
+  JAVA_HOME: "/tmp/java/jdk-21"  # Use temporary directories for pipeline jobs
+  PATH: "$JAVA_HOME/bin:/tmp/gradle/gradle-7.4.2/bin:/tmp/sonar-scanner/sonar-scanner-4.7.0.2747-windows/bin:$PATH"
   SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"
   GIT_DEPTH: "0"
   GIT_STRATEGY: none
@@ -15,8 +15,7 @@ check_gitVersion:
   stage: install-commands
   tags: [gradle]
   script:
-    - $env:Path += ";C:\Program Files\Git\cmd"
-    - git --version
+    - echo "Skipping Git operations due to strategy 'none'"
 
 gradle_install:
   stage: install-commands
@@ -30,15 +29,14 @@ sonar_install:
   stage: install-commands
   script:
     - Invoke-WebRequest https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-windows.zip -OutFile sonar-scanner-cli.zip
-    - Expand-Archive sonar-scanner-cli.zip -DestinationPath "C:\tmp\sonar-scanner"
-    - $env:PATH += ";C:\tmp\sonar-scanner\sonar-scanner-4.7.0.2747-windows\bin"
+    - Expand-Archive sonar-scanner-cli.zip -DestinationPath /tmp/sonar-scanner
+    - $env:PATH += ";/tmp/sonar-scanner/sonar-scanner-4.7.0.2747-windows/bin"
     - sonar-scanner --version
 
 build_project:
   stage: build
   tags: [gradle]
   before_script:
-    - $env:PATH += ";/tmp/gradle/gradle-7.4.2/bin"
     - cd $CI_PROJECT_DIR  # Ensure we are in the project directory
   script:
     - gradle clean build
@@ -47,7 +45,6 @@ run_tests:
   stage: test
   tags: [gradle]
   before_script:
-    - $env:PATH += ";/tmp/gradle/gradle-7.4.2/bin"
     - cd $CI_PROJECT_DIR  # Ensure we are in the project directory
   script:
     - gradle test
@@ -56,7 +53,6 @@ sonarcloud-check:
   stage: sonarcloud-check
   tags: [gradle]
   before_script:
-    - $env:PATH += ";/tmp/gradle/gradle-7.4.2/bin"
     - cd $CI_PROJECT_DIR  # Ensure we are in the project directory
   script:
     - gradle sonarqube
