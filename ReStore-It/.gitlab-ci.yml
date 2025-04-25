@@ -29,9 +29,9 @@ gradle_install:
 sonar_install:
   stage: install-commands
   script:
-    - Invoke-WebRequest https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip -OutFile sonar-scanner-cli.zip
-    - Expand-Archive sonar-scanner-cli.zip -DestinationPath /tmp/sonar-scanner
-    - $env:PATH += ";/tmp/sonar-scanner/sonar-scanner-4.7.0.2747-linux/bin"
+    - Invoke-WebRequest https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-windows.zip -OutFile sonar-scanner-cli.zip
+    - Expand-Archive sonar-scanner-cli.zip -DestinationPath "C:\tmp\sonar-scanner"
+    - $env:PATH += ";C:\tmp\sonar-scanner\sonar-scanner-4.7.0.2747-windows\bin"
     - sonar-scanner --version
 
 build_project:
