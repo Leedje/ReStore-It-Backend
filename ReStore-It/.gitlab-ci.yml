@@ -7,6 +7,13 @@ stages:
 variables:
   PATH: "$CI_PROJECT_DIR/tools/gradle/gradle-7.4.2/bin:$CI_PROJECT_DIR/tools/sonar-scanner/sonar-scanner-4.7.0.2747-windows/bin:$PATH"
 
+check_gitVersion:
+  stage: install-commands
+  tags: [gradle]
+  script:
+    - echo "Verifying Git setup..."
+    - git --version  # Check if Git is installed and accessible
+    - echo "PATH: $env:PATH"  # Debug PATH to ensure it includes Git if needed
 install_dependencies:
   stage: install-commands
   script:
@@ -20,7 +27,9 @@ install_dependencies:
 build_project:
   stage: build
   before_script:
-    - cd $CI_PROJECT_DIR
+    - cd $CI_PROJECT_DIR  # Navigate to the root project directory
+    - echo "Current directory: $(pwd)"
+    - ls -l  # Debug: List directory contents
   script:
     - gradle clean build
 
