@@ -4,62 +4,54 @@ stages:
   - test
   - sonarcloud-check
 
-install_commands:
+check_gitVersion:
   stage: install-commands
   script:
-    - export PATH="$PATH:/c/Program Files/Git/cmd"
     - git --version
 
+gradle_install:
+  stage: install-commands
+  script:
+    - wget https://services.gradle.org/distributions/gradle-7.4.2-bin.zip
+    - unzip gradle-7.4.2-bin.zip -d /tmp/gradle
+    - export PATH=$PATH:/tmp/gradle/gradle-7.4.2/bin
+    - gradle -v
 
-#install_git:
-#  stage: install-commands
-#  script:
-#    - winget install --id Git.Git -e --source winget  # Install Git using Winget (for Windows environments)
-#    - git --version  # Verify the installation
-
-#gradle_install:
-#  stage: install-commands
-#  script:
-#    - wget https://services.gradle.org/distributions/gradle-7.4.2-bin.zip
-#    - unzip gradle-7.4.2-bin.zip -d /tmp/gradle
-#    - export PATH=$PATH:/tmp/gradle/gradle-7.4.2/bin
-#    - gradle -v
-#
-#sonar_install:
-#  stage: install-commands
-#  script:
-#    - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip
-#    - unzip sonar-scanner-cli-4.7.0.2747-linux.zip -d /tmp/sonar-scanner
-#    - export PATH=$PATH:/tmp/sonar-scanner/sonar-scanner-4.7.0.2747-linux/bin
-#    - sonar-scanner --version
+sonar_install:
+  stage: install-commands
+  script:
+    - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip
+    - unzip sonar-scanner-cli-4.7.0.2747-linux.zip -d /tmp/sonar-scanner
+    - export PATH=$PATH:/tmp/sonar-scanner/sonar-scanner-4.7.0.2747-linux/bin
+    - sonar-scanner --version
 
 build_project:
   stage: build
   tags: [gradle]
   script:
     - echo "Build starting..."
-  #  - gradle clean build
+    - gradle clean build
 
 run_tests:
   stage: test
   tags: [gradle]
   script:
     - echo "Running tests..."
-  #  - gradle test
+    - gradle test
 
-#variables:
-#  JAVA_HOME: "C:/Program Files/Java/jdk-21"
-#  PATH: "$JAVA_HOME/bin:$PATH"
-#  SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"
-#  GIT_DEPTH: "0"
-#
-#sonarcloud-check:
-#  stage: sonarcloud-check
-#  tags: [gradle]
-#  image: gradle:jdk21
-#  cache:
-#    key: "${CI_JOB_NAME}"
-#    paths:
-#      - .sonar/cache
-#  script:
-#    - gradle sonarqube
+variables:
+  JAVA_HOME: "C:/Program Files/Java/jdk-21"
+  PATH: "$JAVA_HOME/bin:$PATH"
+  SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"
+  GIT_DEPTH: "0"
+
+sonarcloud-check:
+  stage: sonarcloud-check
+  tags: [gradle]
+  image: gradle:jdk21
+  cache:
+    key: "${CI_JOB_NAME}"
+    paths:
+      - .sonar/cache
+  script:
+    - gradle sonarqube
