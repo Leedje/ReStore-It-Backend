@@ -31,4 +31,4 @@ sonarcloud-check:
       - .sonar/cache
   script:
     - echo "Linting..."
-    # - gradle sonarqube
+     - gradle sonarqube
