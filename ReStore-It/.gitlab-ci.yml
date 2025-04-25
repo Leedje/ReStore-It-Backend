@@ -6,6 +6,7 @@ stages:
 
 check_gitVersion:
   stage: install-commands
+  tags: [gradle]
   script:
     - git --version
 
