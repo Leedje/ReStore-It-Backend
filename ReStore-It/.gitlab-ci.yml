@@ -23,7 +23,7 @@ build_project:
   before_script:
     - cd $CI_PROJECT_DIR  # Ensure we are in the project directory
   script:
-    - gradle clean build
+    - gradle build
 
 run_tests:
   stage: test
