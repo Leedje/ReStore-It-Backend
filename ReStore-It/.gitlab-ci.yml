@@ -17,22 +17,6 @@ check_gitVersion:
   script:
     - echo "Skipping Git operations due to strategy 'none'"
 
-gradle_install:
-  stage: install-commands
-  script:
-    - Invoke-WebRequest https://services.gradle.org/distributions/gradle-7.4.2-bin.zip -OutFile gradle-7.4.2-bin.zip
-    - Expand-Archive gradle-7.4.2-bin.zip -DestinationPath /tmp/gradle
-    - $env:PATH += ";/tmp/gradle/gradle-7.4.2/bin"
-    - gradle -v
-
-sonar_install:
-  stage: install-commands
-  script:
-    - Invoke-WebRequest https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-windows.zip -OutFile sonar-scanner-cli.zip
-    - Expand-Archive sonar-scanner-cli.zip -DestinationPath /tmp/sonar-scanner
-    - $env:PATH += ";/tmp/sonar-scanner/sonar-scanner-4.7.0.2747-windows/bin"
-    - sonar-scanner --version
-
 build_project:
   stage: build
   tags: [gradle]
