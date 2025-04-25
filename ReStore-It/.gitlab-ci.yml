@@ -7,7 +7,6 @@ stages:
 variables:
   SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Defines the location of the analysis task cache
   GIT_DEPTH: "0"  # Tells git to fetch all the branches of the project, required by the analysis task
-  PATH: "$CI_PROJECT_DIR/tools/gradle/gradle-7.4.2/bin:$CI_PROJECT_DIR/tools/sonar-scanner/sonar-scanner-4.7.0.2747-windows/bin:$PATH"
 
 build_project:
   stage: build
