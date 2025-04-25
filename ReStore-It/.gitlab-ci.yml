@@ -4,6 +4,12 @@ stages:
   - test
   - sonarcloud-check
 
+install_git:
+  stage: install-commands
+  script:
+    - winget install --id Git.Git -e --source winget
+    - git --version
+
 gradle_install:
   stage: install-commands
   script:
