@@ -21,8 +21,6 @@ build_project:
   stage: build
   before_script:
     - cd $CI_PROJECT_DIR
-    - echo "Current directory: $(pwd)"
-    - ls -l  # Debug: List directory contents
   script:
     - gradle clean build
 
