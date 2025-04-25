@@ -39,6 +39,7 @@ build_project:
   tags: [gradle]
   before_script:
     - $env:PATH += ";/tmp/gradle/gradle-7.4.2/bin"
+    - cd $CI_PROJECT_DIR  # Ensure we are in the project directory
   script:
     - gradle clean build
 
@@ -47,6 +48,7 @@ run_tests:
   tags: [gradle]
   before_script:
     - $env:PATH += ";/tmp/gradle/gradle-7.4.2/bin"
+    - cd $CI_PROJECT_DIR  # Ensure we are in the project directory
   script:
     - gradle test
 
@@ -55,5 +57,6 @@ sonarcloud-check:
   tags: [gradle]
   before_script:
     - $env:PATH += ";/tmp/gradle/gradle-7.4.2/bin"
+    - cd $CI_PROJECT_DIR  # Ensure we are in the project directory
   script:
     - gradle sonarqube
