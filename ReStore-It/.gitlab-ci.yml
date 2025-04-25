@@ -4,9 +4,12 @@ stages:
   - test
   - sonarcloud-check
 
-before_script:
-  - export PATH="$PATH:/c/Program Files/Git/cmd"
-  - git --version
+install_commands:
+  stage: install-commands
+  script:
+    - export PATH="$PATH:/c/Program Files/Git/cmd"
+    - git --version
+
 
 #install_git:
 #  stage: install-commands
