@@ -21,9 +21,11 @@ build_project:
   stage: build
   tags: [gradle]
   before_script:
-    - cd $CI_PROJECT_DIR  # Ensure we are in the project directory
+    - cd $CI_PROJECT_DIR  # Navigate to the root project directory
+    - echo "Current directory: $(pwd)"
+    - ls -l  # Debug: List directory contents
   script:
-    - gradle build
+    - gradle clean build
 
 run_tests:
   stage: test
