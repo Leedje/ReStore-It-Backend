@@ -18,11 +18,11 @@ public class ReStoreItApplication {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**") // Apply CORS settings to all endpoints
-                        .allowedOrigins("http://localhost:4200") // Allow requests from frontend
-                        .allowedMethods("GET", "POST", "PUT", "DELETE") // Allow specific HTTP methods
-                        .allowedHeaders("*") // Allow all headers
-                        .allowCredentials(true); // Allow cookies/authentication
+                registry.addMapping("/**")
+                        .allowedOrigins("http://localhost:4200")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE")
+                        .allowedHeaders("*")
+                        .allowCredentials(true);
             }
         };
     }

@@ -1,7 +1,24 @@
 stages:
+  - install-commands
   - build
   - test
   - sonarcloud-check
+
+gradle_install:
+  stage: install-commands
+  script:
+    - wget https://services.gradle.org/distributions/gradle-7.4.2-bin.zip
+    - unzip gradle-7.4.2-bin.zip -d /tmp/gradle
+    - export PATH=$PATH:/tmp/gradle/gradle-7.4.2/bin
+    - gradle -v
+
+sonar_install:
+  stage: install-commands
+  script:
+    - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip
+    - unzip sonar-scanner-cli-4.7.0.2747-linux.zip -d /tmp/sonar-scanner
+    - export PATH=$PATH:/tmp/sonar-scanner/sonar-scanner-4.7.0.2747-linux/bin
+    - sonar-scanner --version
 
 build_project:
   stage: build
