@@ -11,7 +11,7 @@ check_gitVersion:
   stage: install-commands
   tags: [gradle]
   script:
-    - echo "Verifying Git setup..."
+    - $env:Path += ";C:\Program Files\Git\cmd"
     - git --version  # Check if Git is installed and accessible
 
 install_dependencies:
