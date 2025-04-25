@@ -20,7 +20,7 @@ run_tests:
     - cd $CI_PROJECT_DIR
   script:
     - echo "Testing..."
-   # - gradle test
+    - gradle test
 
 sonarcloud-check:
   stage: sonarcloud-check
@@ -31,4 +31,4 @@ sonarcloud-check:
       - .sonar/cache
   script:
     - echo "Linting..."
-     - gradle sonarqube
+    - gradle sonarqube
