@@ -22,7 +22,6 @@ install_dependencies:
     - unzip gradle.zip -d $CI_PROJECT_DIR/tools/gradle
     - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-windows.zip -O sonar-scanner.zip
     - unzip sonar-scanner.zip -d $CI_PROJECT_DIR/tools/sonar-scanner
-    - echo "Dependencies installed successfully in $CI_PROJECT_DIR/tools!"
 
 build_project:
   stage: build
