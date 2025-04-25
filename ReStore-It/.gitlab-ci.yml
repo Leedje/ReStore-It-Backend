@@ -7,23 +7,23 @@ stages:
 check_gitVersion:
   stage: install-commands
   script:
-    - export PATH="$PATH:/c/Program Files/Git/cmd"
+    - $env:PATH += ";C:\Program Files\Git\cmd"
     - git --version
 
 gradle_install:
   stage: install-commands
   script:
-    - wget https://services.gradle.org/distributions/gradle-7.4.2-bin.zip
-    - unzip gradle-7.4.2-bin.zip -d /tmp/gradle
-    - export PATH=$PATH:/tmp/gradle/gradle-7.4.2/bin
+    - Invoke-WebRequest https://services.gradle.org/distributions/gradle-7.4.2-bin.zip -OutFile gradle-7.4.2-bin.zip
+    - Expand-Archive gradle-7.4.2-bin.zip -DestinationPath /tmp/gradle
+    - $env:PATH += ";/tmp/gradle/gradle-7.4.2/bin"
     - gradle -v
 
 sonar_install:
   stage: install-commands
   script:
-    - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip
-    - unzip sonar-scanner-cli-4.7.0.2747-linux.zip -d /tmp/sonar-scanner
-    - export PATH=$PATH:/tmp/sonar-scanner/sonar-scanner-4.7.0.2747-linux/bin
+    - Invoke-WebRequest https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip -OutFile sonar-scanner-cli.zip
+    - Expand-Archive sonar-scanner-cli.zip -DestinationPath /tmp/sonar-scanner
+    - $env:PATH += ";/tmp/sonar-scanner/sonar-scanner-4.7.0.2747-linux/bin"
     - sonar-scanner --version
 
 build_project:
@@ -49,10 +49,5 @@ variables:
 sonarcloud-check:
   stage: sonarcloud-check
   tags: [gradle]
-  image: gradle:jdk21
-  cache:
-    key: "${CI_JOB_NAME}"
-    paths:
-      - .sonar/cache
   script:
     - gradle sonarqube
