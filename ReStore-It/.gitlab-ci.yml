@@ -5,6 +5,7 @@ stages:
   - sonarcloud-check
 
 install_git:
+  stage: install-commands
   script:
     - winget install --id Git.Git -e --source winget  # Install Git using Winget (for Windows environments)
     - git --version  # Verify the installation
