@@ -7,7 +7,6 @@ stages:
 check_gitVersion:
   stage: install-commands
   script:
-    - $env:PATH += ";C:\Program Files\Git\cmd"
     - git --version
 
 gradle_install:
