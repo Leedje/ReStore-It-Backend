@@ -13,7 +13,7 @@ check_gitVersion:
   script:
     - echo "Verifying Git setup..."
     - git --version  # Check if Git is installed and accessible
-    - echo "PATH: $env:PATH"  # Debug PATH to ensure it includes Git if needed
+
 install_dependencies:
   stage: install-commands
   script:
