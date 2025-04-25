@@ -4,6 +4,13 @@ stages:
   - test
   - sonarcloud-check
 
+variables:
+  JAVA_HOME: "C:/Program Files/Java/jdk-21"
+  PATH: "$JAVA_HOME/bin:$PATH"
+  SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"
+  GIT_DEPTH: "0"
+  GIT_STRATEGY: none  # Add this line to disable Git operations
+
 check_gitVersion:
   stage: install-commands
   tags: [gradle]
@@ -40,12 +47,6 @@ run_tests:
   script:
     - echo "Running tests..."
     - gradle test
-
-variables:
-  JAVA_HOME: "C:/Program Files/Java/jdk-21"
-  PATH: "$JAVA_HOME/bin:$PATH"
-  SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"
-  GIT_DEPTH: "0"
 
 sonarcloud-check:
   stage: sonarcloud-check
