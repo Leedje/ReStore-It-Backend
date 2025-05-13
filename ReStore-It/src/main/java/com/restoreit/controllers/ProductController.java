@@ -48,7 +48,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/businesss/delete/{id}") //See if it's possible to delete without using the URL.
-    public ResponseEntity<Void>DeleteProduct(@PathVariable UUID id){
+    public ResponseEntity<Boolean>DeleteProduct(@PathVariable UUID id){
         productService.DeleteProduct(id);
         return ResponseEntity.ok().build();
     }
