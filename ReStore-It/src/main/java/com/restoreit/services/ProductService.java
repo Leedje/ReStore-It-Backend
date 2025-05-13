@@ -5,7 +5,6 @@ import com.restoreit.mappers.ProductMapper;
 import com.restoreit.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.UUID;
@@ -54,7 +53,7 @@ public class ProductService {
     public void DeleteProduct(UUID id){
         if(productRepository.existsById(id)){
             productRepository.deleteById(id);
-        }//throw exception if it doesn't exist
+        }//Only ID exists, if not throw exception
     }
 
     public void EditProduct(ProductDTO productDto){
