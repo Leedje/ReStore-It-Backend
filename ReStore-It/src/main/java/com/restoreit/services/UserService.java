@@ -7,6 +7,8 @@ import com.restoreit.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class UserService {
 
@@ -21,5 +23,15 @@ public class UserService {
 
     public boolean CreateUser(UserDTO userDto){
         return userRepository.save(userMapper.DTOToUser(userDto)) != null;
+    }
+
+    public UserDTO GetUserByID(UUID userID){
+       return this.userRepository.findById(userID)
+               .map(userMapper::UserToDTO)
+               .orElse(null);
+    }
+
+    public UserDTO GetUserByEmail(String email){
+        return this.userMapper.UserToDTO(this.userRepository.findByEmail(email));
     }
 }

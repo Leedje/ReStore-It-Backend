@@ -11,14 +11,14 @@ import java.util.UUID;
 public class Category {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue (strategy = GenerationType.AUTO)
     private UUID id;
+
     private String name;
 
     public Category() {}
 
     public Category(String name) {
-        this.id = UUID.randomUUID();
         this.name = name;
     }
 

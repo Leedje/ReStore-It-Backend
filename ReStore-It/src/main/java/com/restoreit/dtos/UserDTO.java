@@ -8,5 +8,4 @@ public class UserDTO {
     public String name;
     public String email;
     public String password; //implement hashing
-    public List<ProductDTO> products;
 }

@@ -1,44 +1,50 @@
 package com.restoreit.models;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 
 import java.util.List;
-import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
     private String name;
+
+    @Nullable
     private String description;
 
+    @Nullable
     @ManyToMany
     private List<Category> categories;
 
+    private String size;
     private double price;
     private int numberOfProducts;
     private String seller;
-    // private List<Image> images;
+    // private String image;
+
+    @ManyToOne
+    @JoinColumn(name="user_id", nullable=false)
+    private User user;
 
     public Product() {}
 
-    public Product(String name, String description, double price, int numberOfProducts, String seller) {
+    public Product(String name, @Nullable String description, String size, double price, int numberOfProducts, String seller) {
         this.name = name;
         this.description = description;
+        this.size = size;
         this.price = price;
         this.numberOfProducts = numberOfProducts;
         this.seller = seller;
     }
 
-    public int getId() {
+    public UUID getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -89,12 +95,27 @@ public class Product {
         this.seller = seller;
     }
 
-//    public List<Image> getImages() {
-//        return images;
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+//    public String getImage() {
+//        return image;
 //    }
 //
-//    //Set images for now
-//    public void setImages(List<Image> images) {
-//        this.images = images;
+//    public void setImage(String image) {
+//        this.image = image;
 //    }
 }
