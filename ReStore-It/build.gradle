@@ -37,8 +37,9 @@ dependencies {
 
 sonar {
     properties {
-        property "sonar.projectKey", "restore-it_online-thrift-store"
-        property "sonar.organization", "restore-it"
+        property "sonar.projectKey", "Leedje_ReStore-It-Backend"
+        property "sonar.organization", "restoreit"
+        property "sonar.host.url", "https://sonarcloud.io"
     }
 }
 
