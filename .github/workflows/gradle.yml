@@ -36,9 +36,9 @@ jobs:
       run: ls -la
   
     - name: Setup Gradle
-      uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
+      uses: gradle/actions/setup-gradle@v4.0.0
       with:
-         gradle-version: '8.9'
+         gradle-version: '9.0'
          run: chmod +x ReStore-It/gradlew
 
     
@@ -88,4 +88,6 @@ jobs:
       - name: Build and analyze
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: gradle build sonar --info
+        run: | 
+         cd ReStore-It
+         gradle build sonar --info
