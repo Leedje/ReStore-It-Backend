@@ -41,7 +41,9 @@ jobs:
          gradle-version: '8.10'
          run: chmod +x ReStore-It/gradlew
 
-    
+    - name: Debug Gradle
+      run: gradle --warning-mode all
+  
     - name: Build with Gradle 8.10
       run: |
         cd ReStore-It  # Navigate to correct project folder
