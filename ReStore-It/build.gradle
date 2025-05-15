@@ -43,6 +43,11 @@ sonar {
     }
 }
 
+test {
+    useJUnitPlatform()
+    exclude '**/ReStoreItApplicationTests.class' // Prevents Spring Boot from running empty test classes
+}
+
 generateJava {
     schemaPaths = ["${projectDir}/src/main/resources/graphql-client"]
     packageName = 'com.example.restoreit.codegen'
