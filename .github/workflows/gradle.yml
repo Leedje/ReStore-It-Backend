@@ -14,7 +14,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  Build:
 
     runs-on: ubuntu-latest
     permissions:
@@ -31,10 +31,6 @@ jobs:
     # NOTE: The Gradle Wrapper is the default and recommended way to run Gradle (https://docs.gradle.org/current/userguide/gradle_wrapper.html).
     # If your project does not have the Gradle Wrapper configured, you can use the following configuration to run Gradle with a specified version.
 
-
-    - name: Debug Directory Structure
-      run: ls -la
-  
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v4.0.0
       with:
@@ -46,7 +42,7 @@ jobs:
   
     - name: Build with Gradle 8.10
       run: |
-        cd ReStore-It  # Navigate to correct project folder
+        cd ReStore-It  
         gradle build
 
   SonarQube:
@@ -79,3 +75,17 @@ jobs:
         run: | 
          cd ReStore-It
          gradle build sonar --info
+         
+  Test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+   
+      - name: Check Java Version
+        run: java -version
+
+      - name: Test Project
+        run: |
+          cd ReStore-It
+          gradle test
+
