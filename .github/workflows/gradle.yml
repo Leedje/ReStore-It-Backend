@@ -14,7 +14,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  Build:
 
     runs-on: ubuntu-latest
     permissions:
@@ -79,3 +79,13 @@ jobs:
         run: | 
          cd ReStore-It
          gradle build sonar --info
+         
+  Test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test Project
+        run: |
+          cd ReStore-It
+          gradle test
+
+ 
