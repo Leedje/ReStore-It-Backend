@@ -80,6 +80,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+   
+      - name: Check Java Version
+        run: java -version
+
       - name: Test Project
         run: |
           cd ReStore-It
