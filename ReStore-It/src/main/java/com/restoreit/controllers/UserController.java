@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/business")
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @PostMapping("/user/create")
+    @PostMapping("/register")
     public ResponseEntity<Boolean> CreateUser(@RequestBody UserDTO user){
         return ResponseEntity.ok(userService.CreateUser(user));
     }

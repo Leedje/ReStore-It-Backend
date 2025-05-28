@@ -3,25 +3,23 @@ package com.restoreit.models;
 import java.util.UUID;
 import java.util.List;
 import com.restoreit.models.Product;
+import jakarta.persistence.*;
 
 //@Entity
 public class Order {
 
-    //@GeneratedValue
+   // @Id
+    //@GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    //@OneToOne
-    private UUID customerId; //remember that customers don't need an account
-
-    //@ManyToMany
+   // @ManyToMany
     private List<Product> products;
     private boolean isComplete;
 
     public Order(){}
 
-    public Order(UUID id, UUID customerId, List<Product> products, boolean status){
+    public Order(UUID id, List<Product> products, boolean status){
         this.id = id;
-        this.customerId = customerId;
         this.products = products;
         this.isComplete = status;
     }
@@ -32,14 +30,6 @@ public class Order {
 
     public void setOrderId(UUID id) {
         this.id = id;
-    }
-
-    public UUID getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(UUID customerId) {
-        this.customerId = customerId;
     }
 
     public List<Product> getProducts() {

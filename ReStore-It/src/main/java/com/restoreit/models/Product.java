@@ -34,13 +34,13 @@ public class Product {
 
     public Product() {}
 
-    public Product(String name, @Nullable String description, String size, double price, int numberOfProducts, String seller) {
+    public Product(String name, @Nullable String description, String size, double price, int numberOfProducts) {
         this.name = name;
         this.description = description;
         this.size = size;
         this.price = price;
         this.numberOfProducts = numberOfProducts;
-        this.seller = seller;
+        this.seller = this.user.getName();
     }
 
     public UUID getId() {
