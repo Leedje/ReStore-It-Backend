@@ -3,6 +3,7 @@ package com.restoreit.controllers;
 import com.restoreit.dtos.ProductDTO;
 import com.restoreit.services.JWTService;
 import com.restoreit.services.ProductService;
+import com.restoreit.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,8 @@ public class ProductController {
 
     @Autowired
     private JWTService jwtService;
+    @Autowired
+    private UserService userService;
 
     //Guest Mapping: No authorization needed
     @GetMapping("")
@@ -33,43 +36,77 @@ public class ProductController {
     }
 
     //Business Mapping
-    @GetMapping("/business/{userId}")
-    public ResponseEntity<List<ProductDTO>> GetUserProducts(@PathVariable UUID userId, @RequestHeader("Authorization") String authHeader){
+    @GetMapping("/business")
+    public ResponseEntity<List<ProductDTO>> GetUserProducts(@RequestHeader("Authorization") String authHeader){
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = authHeader.substring(7);
             String extractedUserId = (String) jwtService.extractClaims(token).get("userId");
 
             if(jwtService.validateToken(token, extractedUserId)){
+                UUID userId = UUID.fromString(extractedUserId);
                 return ResponseEntity.ok(productService.GetUserProducts(userId));
             }
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
-    @GetMapping("/business/{productId}/{userId}")
-    public ResponseEntity<ProductDTO> GetProductByUserID(@PathVariable UUID productId, @PathVariable UUID userId){
-        if(jwtService.validateToken("placeholder token", "placeholder username")){
-            return ResponseEntity.ok(productService.GetProductByUserID(productId, userId));
+    @GetMapping("/business/{productId}")
+    public ResponseEntity<ProductDTO> GetProductByUserID(@PathVariable UUID productId, @RequestHeader("Authorization") String authHeader){
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            String token = authHeader.substring(7);
+            String extractedUserId = (String) jwtService.extractClaims(token).get("userId");
+
+            if(jwtService.validateToken(token, extractedUserId)) {
+                UUID userId = UUID.fromString(extractedUserId);
+                return ResponseEntity.ok(productService.GetProductByUserID(productId, userId));
+            }
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
     @PostMapping("/business/create")
-    public ResponseEntity<Boolean> CreateProduct(@RequestBody ProductDTO product){
-        if(productService.CreateProduct(product) && jwtService.validateToken("token", "username"))
-        {
-            return ResponseEntity.status(HttpStatus.CREATED).body(true);
+    public ResponseEntity<Boolean> CreateProduct(@RequestBody ProductDTO product, @RequestHeader("Authorization") String authHeader){
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            String token = authHeader.substring(7);
+            String extractedUserId = (String) jwtService.extractClaims(token).get("userId");
+
+            if(jwtService.validateToken(token, extractedUserId)) {
+                UUID userId = UUID.fromString(extractedUserId);
+
+                if(productService.CreateProduct(product, userId)){
+                return ResponseEntity.status(HttpStatus.CREATED).body(true);
+                }
+            }
         }
         return ResponseEntity.badRequest().body(false);
     }
 
     @DeleteMapping("/business/delete/{id}")
-    public ResponseEntity<Void>DeleteProduct(@PathVariable UUID id){
-        if(jwtService.validateToken("token", "username"))
-        {
-            productService.DeleteProduct(id);
-            return ResponseEntity.noContent().build();
+    public ResponseEntity<Void>DeleteProduct(@PathVariable UUID id , @RequestHeader("Authorization") String authHeader){
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            String token = authHeader.substring(7);
+            String extractedUserId = (String) jwtService.extractClaims(token).get("userId");
+
+            if(jwtService.validateToken(token, extractedUserId)) {
+                productService.DeleteProduct(id);
+                return ResponseEntity.noContent().build();
+            }
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
+
+    @PutMapping("/business/edit")
+    public ResponseEntity<Boolean> EditProduct(@RequestBody ProductDTO product, @RequestHeader("Authorization") String authHeader){
+        if (authHeader != null && authHeader.startsWith("Bearer ")){
+            String token = authHeader.substring(7);
+            String extractedUserId = (String) jwtService.extractClaims(token).get("userId");
+
+            if(jwtService.validateToken(token, extractedUserId)) {
+                productService.EditProduct(product);
+                return ResponseEntity.noContent().build();
+            }
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
+
 }

@@ -41,10 +41,11 @@ public class ReStoreItApplication {
                 .cors(Customizer.withDefaults()) // Ensure CORS applies correctly
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/products/**").permitAll() // Public access for guest users
-                        .requestMatchers("/products/business/**").hasAuthority("ROLE_BUSINESS") // Ensure correct role format
+                        .requestMatchers("/categories/**").permitAll()
+                        .requestMatchers("/products/**").permitAll()
+                        .requestMatchers("/products/business/**").hasAuthority("ROLE_BUSINESS")
                         .requestMatchers("/business/login/validate").permitAll()
-                        .requestMatchers("/user/**").permitAll()
+                        .requestMatchers("/user/**").permitAll() // for some reason register no longer works ->  fix that last.
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(new JWTAuthenticationFilter(new JWTService()), UsernamePasswordAuthenticationFilter.class);
