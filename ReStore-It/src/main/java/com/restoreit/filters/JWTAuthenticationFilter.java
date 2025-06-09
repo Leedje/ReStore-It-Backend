@@ -37,7 +37,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
             String role = claims.get("role", String.class);
 
             if (jwtService.validateToken(token, username)) {
-                List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_" + role));
+                List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(role));
                 SecurityContextHolder.getContext().setAuthentication(
                         new UsernamePasswordAuthenticationToken(username, null, authorities)
                 );

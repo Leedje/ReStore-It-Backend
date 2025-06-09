@@ -38,14 +38,21 @@ public class ReStoreItApplication {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
-                .cors(Customizer.withDefaults()) // Ensure CORS applies correctly
+                .cors(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/chat/history/{chatRoomId}").permitAll()
+                        .requestMatchers("/chat/{chatRoomId}").permitAll()
+                        .requestMatchers("/chat/guest").permitAll()
                         .requestMatchers("/categories/**").permitAll()
                         .requestMatchers("/products/**").permitAll()
-                        .requestMatchers("/products/business/**").hasAuthority("ROLE_BUSINESS")
+                        .requestMatchers("/user/**").permitAll()
                         .requestMatchers("/business/login/validate").permitAll()
-                        .requestMatchers("/user/**").permitAll() // for some reason register no longer works ->  fix that last.
+                        .requestMatchers("/order/submit").permitAll()
+                        .requestMatchers("/order/**").permitAll()
+                        .requestMatchers("/chat/business").hasAuthority("ROLE_BUSINESS")
+                        .requestMatchers("/order/business/**").hasAuthority("ROLE_BUSINESS")
+                        .requestMatchers("/products/business/**").hasAuthority("ROLE_BUSINESS")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(new JWTAuthenticationFilter(new JWTService()), UsernamePasswordAuthenticationFilter.class);

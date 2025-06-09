@@ -21,8 +21,6 @@ public class ProductController {
 
     @Autowired
     private JWTService jwtService;
-    @Autowired
-    private UserService userService;
 
     //Guest Mapping: No authorization needed
     @GetMapping("")

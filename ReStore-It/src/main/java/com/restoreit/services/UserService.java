@@ -3,6 +3,7 @@ package com.restoreit.services;
 import com.restoreit.dtos.UserDTO;
 import com.restoreit.models.User;
 import com.restoreit.mappers.UserMapper;
+import com.restoreit.repository.ProductRepository;
 import com.restoreit.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,5 +34,9 @@ public class UserService {
 
     public UserDTO GetUserByEmail(String email){
         return this.userMapper.UserToDTO(this.userRepository.findByEmail(email));
+    }
+
+    public User GetUserByProductId(UUID productId) {
+        return userRepository.findByProductId(productId);
     }
 }

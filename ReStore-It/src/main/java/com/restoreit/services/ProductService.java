@@ -43,6 +43,7 @@ public class ProductService {
         User user = userMapper.DTOToUser(userService.GetUserByID(userId));
         if(user!=null){
             product.setUser(user);
+            product.setSeller(user.getName());
             return productRepository.save(product) != null;
         }
         return false;
