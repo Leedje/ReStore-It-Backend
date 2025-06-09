@@ -32,7 +32,7 @@ public class OrderController {
         return ResponseEntity.badRequest().build();
     }
 
-    @DeleteMapping("/cancel/{orderId}") //this function should be on the error page
+    @DeleteMapping("/cancel/{orderId}") //this function should be on the submitted order
     //Unsure or made a mistake? button: Cancel order
     public ResponseEntity<Boolean> CancelOrder(@PathVariable UUID orderId){
         //inside the service, I need to make sure that all chats are deleted from that order as well

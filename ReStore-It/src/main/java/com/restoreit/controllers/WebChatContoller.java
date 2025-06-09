@@ -65,11 +65,10 @@ public class WebChatContoller {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
-    @PostMapping("/guest") //change request body.
+    @PostMapping("/guest")
     public ResponseEntity<List<ChatRoomDTO>> getGuestChatsByEmailAndOrder(@RequestBody ChatRequestDTO chatRequest) {
         if(chatRequest.order.email.equals(chatRequest.email)){
             return ResponseEntity.ok(chatRoomService.GetChatRoomsByOrderId(chatRequest.order.id));
-            //this isn't returning the user chats it should be
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
