@@ -22,8 +22,7 @@ public class ChatService {
     }
 
     public List<ChatMessage> getChatHistoryByChatID(String chatRoomId) {
-        return chatRepository.findByChatRoomId(chatRoomId);//I need to order by time sent
-        //this stopped working
+        return chatRepository.findByChatRoomId(chatRoomId);
     }
 
 }

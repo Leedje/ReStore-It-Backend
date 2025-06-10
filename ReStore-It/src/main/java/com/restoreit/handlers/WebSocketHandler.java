@@ -54,7 +54,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
 
     private String getChatRoomId(WebSocketSession session) {
         String path = session.getUri().getPath();
-        return path.substring(path.lastIndexOf("/") + 1); // Extract last segment as chatRoomId
+        return path.substring(path.lastIndexOf("/") + 1);
     }
 
 

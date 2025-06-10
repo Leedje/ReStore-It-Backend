@@ -52,7 +52,7 @@ public class ReStoreItApplication {
                         .requestMatchers("/order/**").permitAll()
                         .requestMatchers("/chat/business").hasAuthority("ROLE_BUSINESS")
                         .requestMatchers("/order/business/**").hasAuthority("ROLE_BUSINESS")
-                        .requestMatchers("/products/business/**").hasAuthority("ROLE_BUSINESS")
+                        .requestMatchers("/products/business/**").hasAuthority("ROLE_BUSINESS") // rearrange the priority of these endpoints so that it can work
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(new JWTAuthenticationFilter(new JWTService()), UsernamePasswordAuthenticationFilter.class);
