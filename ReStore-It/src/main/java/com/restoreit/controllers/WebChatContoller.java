@@ -49,7 +49,7 @@ public class WebChatContoller {
         return chatService.getChatHistoryByChatID(chatRoomId);
     }
 
-    @GetMapping("/business")
+    @GetMapping("/user-chats")
     public ResponseEntity<List<ChatRoomDTO>> getChatsByUserId(@RequestHeader("Authorization") String authHeader){
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = authHeader.substring(7);
@@ -64,7 +64,7 @@ public class WebChatContoller {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
-    @PostMapping("/guest")
+    @PostMapping("/customer-chats")
     public ResponseEntity<List<ChatRoomDTO>> getGuestChatsByEmailAndOrder(@RequestBody ChatRequestDTO chatRequest) {
         if(chatRequest.order.email.equals(chatRequest.email)){
             return ResponseEntity.ok(chatRoomService.GetChatRoomsByOrderId(chatRequest.order.id));

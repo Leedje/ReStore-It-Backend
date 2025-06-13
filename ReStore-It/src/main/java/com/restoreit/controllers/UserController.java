@@ -24,7 +24,7 @@ public class UserController {
     @Autowired
     private JWTService jwtService;
 
-    @PostMapping("/register")
+    @PostMapping("/create")
     public ResponseEntity<?> CreateUser(@RequestBody UserDTO user){
         //do user model check instead
         if(user!=null && userService.CreateUser(user)) {

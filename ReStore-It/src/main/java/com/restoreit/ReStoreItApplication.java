@@ -41,18 +41,23 @@ public class ReStoreItApplication {
                 .cors(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/chat/history/{chatRoomId}").permitAll()
-                        .requestMatchers("/chat/{chatRoomId}").permitAll()
-                        .requestMatchers("/chat/guest").permitAll()
-                        .requestMatchers("/categories/**").permitAll()
-                        .requestMatchers("/products/**").permitAll()
-                        .requestMatchers("/user/**").permitAll()
-                        .requestMatchers("/business/login/validate").permitAll()
-                        .requestMatchers("/order/submit").permitAll()
-                        .requestMatchers("/order/**").permitAll()
-                        .requestMatchers("/chat/business").hasAuthority("ROLE_BUSINESS")
-                        .requestMatchers("/order/business/**").hasAuthority("ROLE_BUSINESS")
-                        .requestMatchers("/products/business/**").hasAuthority("ROLE_BUSINESS") // rearrange the priority of these endpoints so that it can work
+                        .requestMatchers(
+                                "/chat/**",
+                                "/categories",
+                                "/products/**",
+                                "/products/{id}",
+                                "/user/**",
+                                "/login/**",
+                                "/orders/submit",
+                                "/orders/{orderId}").permitAll()
+                        .requestMatchers("/chat/user-chats",
+                                "/orders/pending",
+                                "/orders/completed",
+                                "orders/set-complete",
+                                "/products/create",
+                                "/products/delete/{id}",
+                                "/products/edit",
+                                "/products/user-products/**").hasAuthority("ROLE_BUSINESS")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(new JWTAuthenticationFilter(new JWTService()), UsernamePasswordAuthenticationFilter.class);

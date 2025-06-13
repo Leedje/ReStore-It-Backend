@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/business/login")
+@RequestMapping("login")
 public class LoginController {
 
     @Autowired

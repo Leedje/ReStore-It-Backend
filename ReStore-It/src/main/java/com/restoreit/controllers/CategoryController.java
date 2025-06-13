@@ -9,19 +9,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/categories")
 public class CategoryController {
 
     @Autowired
     private CategoryService categoryService;
 
-    @GetMapping("")
+    @GetMapping("/categories")
     public ResponseEntity<List<CategoryDTO>> GetAllCategories(){
         return ResponseEntity.ok(categoryService.GetAllCategories());
-    }
-
-    @PostMapping("/create")
-    public ResponseEntity<Boolean> createCategory(@RequestBody CategoryDTO categoryDTO){
-        return ResponseEntity.ok(categoryService.CreateCategory(categoryDTO));
     }
 }

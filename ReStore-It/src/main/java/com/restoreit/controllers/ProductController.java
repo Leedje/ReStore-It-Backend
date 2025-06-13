@@ -28,13 +28,14 @@ public class ProductController {
         return ResponseEntity.ok(productService.GetAllProducts());
     }
 
+    //No authorization needed
     @GetMapping("/{id}")
     public ResponseEntity<ProductDTO> GetProductByID(@PathVariable UUID id){
           return ResponseEntity.ok(productService.GetProductByID(id));
     }
 
     //Business Mapping
-    @GetMapping("/business")
+    @GetMapping("/user-products")
     public ResponseEntity<List<ProductDTO>> GetUserProducts(@RequestHeader("Authorization") String authHeader){
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = authHeader.substring(7);
@@ -48,7 +49,7 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
-    @GetMapping("/business/{productId}")
+    @GetMapping("/user-products/{productId}")
     public ResponseEntity<ProductDTO> GetProductByUserID(@PathVariable UUID productId, @RequestHeader("Authorization") String authHeader){
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = authHeader.substring(7);
@@ -62,7 +63,7 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
-    @PostMapping("/business/create")
+    @PostMapping("/create")
     public ResponseEntity<Boolean> CreateProduct(@RequestBody ProductDTO product, @RequestHeader("Authorization") String authHeader){
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = authHeader.substring(7);
@@ -79,7 +80,7 @@ public class ProductController {
         return ResponseEntity.badRequest().body(false);
     }
 
-    @DeleteMapping("/business/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void>DeleteProduct(@PathVariable UUID id , @RequestHeader("Authorization") String authHeader){
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = authHeader.substring(7);
@@ -93,7 +94,7 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
-    @PutMapping("/business/edit")
+    @PutMapping("/edit")
     public ResponseEntity<Boolean> EditProduct(@RequestBody ProductDTO product, @RequestHeader("Authorization") String authHeader){
         if (authHeader != null && authHeader.startsWith("Bearer ")){
             String token = authHeader.substring(7);
