@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/order")
+@RequestMapping("/orders")
 public class OrderController {
 
     @Autowired
@@ -47,7 +47,7 @@ public class OrderController {
     }
 
     //Business mapping
-    @GetMapping("/business/pending")
+    @GetMapping("/pending")
     public ResponseEntity<List<OrderDTO>> GetPendingOrdersByUserId(@RequestHeader("Authorization") String authHeader){
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = authHeader.substring(7);
@@ -61,7 +61,7 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
-    @GetMapping("/business/completed")
+    @GetMapping("/completed")
     public ResponseEntity<List<OrderDTO>> GetCompletedOrdersByUserId(@RequestHeader("Authorization") String authHeader){
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = authHeader.substring(7);
@@ -75,11 +75,13 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
-    @PostMapping("/business/iscomplete")
+    @PostMapping("/set-complete")
     public ResponseEntity<Boolean> SetOrderAsComplete(@RequestBody OrderDTO order, @RequestHeader("Authorization") String authHeader){
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = authHeader.substring(7);
             String extractedUserId = (String) jwtService.extractClaims(token).get("userId");
+
+            System.out.println("Received orderId: " + order.id);
 
             if(jwtService.validateToken(token, extractedUserId)){
                 UUID userId = UUID.fromString(extractedUserId);
