@@ -6,15 +6,21 @@ import com.restoreit.mappers.UserMapper;
 import com.restoreit.repository.ProductRepository;
 import com.restoreit.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+
+    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(14);
 
     @Autowired
     public UserService(UserRepository userRepository, UserMapper userMapper) {
@@ -23,6 +29,7 @@ public class UserService {
     }
 
     public boolean CreateUser(UserDTO userDto){
+        userDto.password = encoder.encode(userDto.password);
         return userRepository.save(userMapper.DTOToUser(userDto)) != null;
     }
 
@@ -38,5 +45,17 @@ public class UserService {
 
     public User GetUserByProductId(UUID productId) {
         return userRepository.findByProductId(productId);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(email);
+
+        return org.springframework.security.core.userdetails.User.builder()
+                .username(user.getEmail())
+                .password(user.getPassword())
+                .authorities("ROLE_BUSINESS")
+                .build();
+
     }
 }
