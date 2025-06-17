@@ -20,7 +20,7 @@ public class WebSocketConfiguration implements WebSocketConfigurer {
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         registry.addHandler(webSocketHandler, "/chat/{chatRoomId}")
-                .setAllowedOrigins("http://localhost:4200", "http://localhost:4300")
+                .setAllowedOrigins("*")
                 .addInterceptors(new HttpSessionHandshakeInterceptor());
     }
 }
