@@ -1,9 +1,39 @@
+version: "3.9"
 services:
+  # SQL Database Service
   sqlserver:
-    image: 'mcr.microsoft.com/mssql/server:latest'
+    image: 'mcr.microsoft.com/mssql/server:2022-latest'
+    container_name: 'mssql-container'
     environment:
-      - 'ACCEPT_EULA=yes'
-      - 'MSSQL_PID=express'
-      - 'MSSQL_SA_PASSWORD=verYs3cret'
+      - 'ACCEPT_EULA=Y'
+      - 'MSSQL_DATABASE=${DB_DATABASE}'
+      - 'MSSQL_SA_PASSWORD=${DB_PASSWORD}'
+      - 'MSSQL_USER=${DB_USERNAME}'
+      - 'MSSQL_PASSWORD=${DB_PASSWORD}'
+      - 'MSSQL_PID=Express'
+    volumes:
+      - mssqldb_data:/var/opt/mssql/data
     ports:
-      - '1433:3306'
+      - '1433:1433'
+    env_file:
+      - .env
+
+  # MongoDB Service
+  mongodbserver:
+    image: 'mongo:latest'
+    container_name: 'mongodb-container'
+    environment:
+      - 'MONGODB_CLUSTER=${MDB_CLUSTER}'
+      - 'MONGODB_DATABASE=${MDB_DATABASE}'
+      - 'MONGODB_USER=${MDB_USERNAME}'
+      - 'MONGODB_PASSWORD=${MDB_PASSWORD}'
+    volumes:
+      - mongodb_data:/data/db
+    ports:
+      - '27017:27017'
+    env_file:
+      - .env
+
+volumes:
+  mssqldb_data:
+  mongodb_data:
