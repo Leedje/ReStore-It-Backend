@@ -29,6 +29,10 @@ public class UserService implements UserDetailsService {
     }
 
     public boolean CreateUser(UserDTO userDto){
+        if (userRepository.existsByEmail(userDto.email)) {
+            return false;
+        }
+
         userDto.password = encoder.encode(userDto.password);
         return userRepository.save(userMapper.DTOToUser(userDto)) != null;
     }

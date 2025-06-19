@@ -13,4 +13,6 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 
     @Query("SELECT DISTINCT u FROM User u JOIN u.products p WHERE p.id = :productId AND p.user.id = u.id")
     User findByProductId(UUID productId);
+
+    boolean existsByEmail(String email);
 }
