@@ -30,7 +30,7 @@ public class UserController {
         if(user!=null && userService.CreateUser(user)) {
             return ResponseEntity.status(HttpStatus.CREATED).build();
         }
-        return ResponseEntity.badRequest().build();
+        return ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
 
 }

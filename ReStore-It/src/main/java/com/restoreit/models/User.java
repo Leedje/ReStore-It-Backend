@@ -14,6 +14,8 @@ public class User {
     private UUID id;
 
     private String name;
+
+    @Column(unique = true)
     private String email;
     private String password; //implement hashing
 

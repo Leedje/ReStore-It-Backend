@@ -9,7 +9,7 @@ public class ProductDTO {
     public String description;
     public List<CategoryDTO> categories;
     public String size;
-    public int price;
+    public double price;
     public int numberOfProducts;
     public String seller;
 }
