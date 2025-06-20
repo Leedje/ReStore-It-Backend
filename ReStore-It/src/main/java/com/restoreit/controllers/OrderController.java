@@ -32,18 +32,9 @@ public class OrderController {
         return ResponseEntity.badRequest().build();
     }
 
-    @DeleteMapping("/cancel/{orderId}") //this function should be on the error page
-    //Unsure or made a mistake? button: Cancel order
-    public ResponseEntity<Boolean> CancelOrder(@PathVariable UUID orderId){
-        //inside the service, I need to make sure that all chats are deleted from that order as well
-        //maybe I can turn that into an async live update as soon as it gets cancelled?
-        //ONLY IFF !! I have time left fr fr
-        return ResponseEntity.noContent().build();
-    }
-
-    @GetMapping("/{orderId}")
-    public ResponseEntity<OrderDTO> GetOrderById(@PathVariable UUID orderId){
-        return ResponseEntity.ok(orderService.GetOrderById(orderId));
+    @GetMapping("/{id}")
+    public ResponseEntity<OrderDTO> GetOrderById(@PathVariable UUID id){
+        return ResponseEntity.ok(orderService.GetOrderById(id));
     }
 
     //Business mapping

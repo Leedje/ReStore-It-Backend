@@ -65,7 +65,7 @@ public class ReStoreItApplication {
                                 "/user/**",
                                 "/login/**",
                                 "/orders/submit",
-                                "/orders/{orderId}").permitAll()
+                                "/orders/{id}").permitAll()
                         .requestMatchers("/chat/user-chats",
                                 "/orders/pending",
                                 "/orders/completed",
