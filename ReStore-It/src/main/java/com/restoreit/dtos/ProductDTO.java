@@ -10,6 +10,5 @@ public class ProductDTO {
     public List<CategoryDTO> categories;
     public String size;
     public double price;
-    public int numberOfProducts;
     public String seller;
 }
