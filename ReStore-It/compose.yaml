@@ -1,5 +1,16 @@
 version: "3.9"
 services:
+  #Backend Service
+  backend:
+    image: 'restoreit-backend:latest'
+    ports:
+      - '8080:8080'
+    depends_on:
+      - sqlserver
+      - mongodbserver
+    env_file:
+      - .env
+
   # SQL Database Service
   sqlserver:
     image: 'mcr.microsoft.com/mssql/server:2022-latest'
