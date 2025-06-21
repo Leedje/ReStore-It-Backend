@@ -24,7 +24,6 @@ public class Product {
 
     private String size;
     private double price;
-    private int numberOfProducts;
     private String seller;
     // private String image;
 
@@ -34,12 +33,11 @@ public class Product {
 
     public Product() {}
 
-    public Product(String name, @Nullable String description, String size, double price, int numberOfProducts) {
+    public Product(String name, @Nullable String description, String size, double price) {
         this.name = name;
         this.description = description;
         this.size = size;
         this.price = price;
-        this.numberOfProducts = numberOfProducts;
         this.seller = this.user.getName();
     }
 
@@ -80,14 +78,6 @@ public class Product {
 
     public void setPrice(double price) {
         this.price = price;
-    }
-
-    public int getNumberOfProducts() {
-        return numberOfProducts;
-    }
-
-    public void setNumberOfProducts(int numberOfProducts) {
-        this.numberOfProducts = numberOfProducts;
     }
 
     public String getSeller() {
